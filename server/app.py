@@ -38,7 +38,7 @@ def handle_gyro(json):
     del json["id"]
 
     maximum_gyro = 20.0
-    x, y, z = json.values()
+    x, y, z = json["x"], json["y"], json["z"]
     x, y, z = rescale(x, y, z, maximum_gyro)
 
 
@@ -53,11 +53,11 @@ def handle_tilt(json):
     del json["id"]
 
     maximum_tilt = 85.0
-    x, y, z = json.values()
+    x, y, z = json["x"], json["y"], json["z"]
     x, y, z = rescale(x, y, z, maximum_tilt)
 
     wiimote.setAxis(pyvjoy.HID_USAGE_SL0, x)
-    wiimote.setAxis(pyvjoy.HID_USAGE_SL1, z)
+    wiimote.setAxis(pyvjoy.HID_USAGE_SL1, y)
 
 
 @socketio.on("accel")
@@ -65,8 +65,9 @@ def handle_acceleration(json):
     wiimote = wiimotes[json["id"]]
     del json["id"]
 
-    maximum_accel = 4.0
-    x, y, z = json.values()
+    maximum_accel = 5
+    x, y, z = json["x"], json["y"], json["z"]
+    print(f"{f'{x:.3f}':>6} {f'{y:.3f}':>6} {f'{z:.3f}':>6}")
     x, y, z = rescale(x, y, z, maximum_accel)
 
     wiimote.setAxis(pyvjoy.HID_USAGE_X, x)
