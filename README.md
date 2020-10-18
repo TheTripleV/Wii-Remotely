@@ -1,4 +1,4 @@
-# phonejoy
+# Wii Remotely
 
 Play Nintendo Wii games with friends remotely (and safely)!
 
