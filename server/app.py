@@ -11,96 +11,80 @@ import pyvjoy
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-w = WiiMote(1)
+wiimotes = {1: WiiMote(1), 2: WiiMote(2)}
 
 @socketio.on("connect")
 def connect():
-    print("Phone connected:")
+    print("Phone connected.")
+
 
 @socketio.on("disconnect")
 def disconnect():
-    print("Client disconnected")
+    print("Phone disconnected.")
+
 
 @socketio.on("buttons")
 def handle_buttons(json):
+    wiimote = wiimotes[json["id"]]
+    print(json["id"])
+    del json["id"]
     for button, value in json.items():
-        print("Setting", button, "to", value)
-        w.setButton(button, value)
-    print(json)
-    
+        wiimote.setButton(button, value)
+
 
 @socketio.on("gyro")
 def handle_gyro(json):
+    wiimote = wiimotes[json["id"]]
+    del json["id"]
+
     maximum_gyro = 20.0
     x, y, z = json.values()
+    x, y, z = rescale(x, y, z, maximum_gyro)
 
-    x *= (16384 / maximum_gyro)
-    x += 16384
 
-    y *= (16384 / maximum_gyro)
-    y += 16384
-
-    z *= (16384 / maximum_gyro)
-    z += 16384
-
-    x, y, z = int(x), int(y), int(z)
-
-    # set X
-    w.setAxis(pyvjoy.HID_USAGE_RX, x)
-    # set Y
-    w.setAxis(pyvjoy.HID_USAGE_RY, y)
-    # set Z
-    w.setAxis(pyvjoy.HID_USAGE_RZ, z)
+    wiimote.setAxis(pyvjoy.HID_USAGE_RX, x)
+    wiimote.setAxis(pyvjoy.HID_USAGE_RY, y)
+    wiimote.setAxis(pyvjoy.HID_USAGE_RZ, z)
 
 
 @socketio.on("tilt")
 def handle_tilt(json):
+    wiimote = wiimotes[json["id"]]
+    del json["id"]
+
     maximum_tilt = 85.0
     x, y, z = json.values()
-    print(int(x), int(y), int(z))
+    x, y, z = rescale(x, y, z, maximum_tilt)
 
-    x *= (16384 / maximum_tilt)
-    x += 16384
-
-    y *= (16384 / maximum_tilt)
-    y += 16384
-
-    z *= (16384 / maximum_tilt)
-    z += 16384
-
-    x, y, z = int(x), int(y), int(z)
-
-    # set X
-    w.setAxis(pyvjoy.HID_USAGE_SL0, x)
-    # set Y
-    # w.setAxis(pyvjoy.HID_USAGE_SL1, y)
-    # set Z
-    w.setAxis(pyvjoy.HID_USAGE_SL1, z)
+    wiimote.setAxis(pyvjoy.HID_USAGE_SL0, x)
+    wiimote.setAxis(pyvjoy.HID_USAGE_SL1, z)
 
 
 @socketio.on("accel")
 def handle_acceleration(json):
+    wiimote = wiimotes[json["id"]]
+    del json["id"]
+
     maximum_accel = 4.0
     x, y, z = json.values()
+    x, y, z = rescale(x, y, z, maximum_accel)
 
-    x *= (16384 / maximum_accel)
-    x += 16384
+    wiimote.setAxis(pyvjoy.HID_USAGE_X, x)
+    wiimote.setAxis(pyvjoy.HID_USAGE_Y, y)
+    wiimote.setAxis(pyvjoy.HID_USAGE_Z, z)
 
-    y *= (16384 / maximum_accel)
-    y += 16384
 
-    z *= (16384 / maximum_accel)
-    z += 16384
+def rescale(x, y, z, max_real_value, max_controller_value=16384):
+    x *= (max_controller_value / max_real_value)
+    x += max_controller_value
 
-    x, y, z = int(x), int(y), int(z)
+    y *= (max_controller_value / max_real_value)
+    y += max_controller_value
 
-    # set X
-    w.setAxis(pyvjoy.HID_USAGE_X, x)
-    # set Y
-    w.setAxis(pyvjoy.HID_USAGE_Y, y)
-    # set Z
-    w.setAxis(pyvjoy.HID_USAGE_Z, z)
+    z *= (max_controller_value / max_real_value)
+    z += max_controller_value
 
+    return int(x), int(y), int(z)
 
 
 if __name__ == "__main__":
