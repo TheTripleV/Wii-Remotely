@@ -4,7 +4,6 @@ class WiiMote():
     def __init__(self, controller_id: int=1):
         self.j = pyvjoy.VJoyDevice(controller_id)
         self.controller_id = controller_id
-        self.buttons_pressed = []
         self.button_mapping = {
             "A":1,
             "B":2,
@@ -26,26 +25,16 @@ class WiiMote():
             print("Failed to find button mapping. Check your spelling?")
             return
 
-        if value is True:
-            self.buttons_pressed.append(button)
-        else:
-            try:
-                self.buttons_pressed.remove(button)
-            except:
-                pass
-        
-        res = 0
-        for button in self.buttons_pressed:
-            res |= (2**(button-1))
-
-        self.j.data.lButtons = res
+        self.j._sdk.SetBtn(value, self.controller_id, button)
         self.j.update()
         return True
 
     def clearButtons(self):
         self.buttons_pressed = []
-        self.j.data.lButtons = 0
-        self.j.update()
+        self.j._sdk.ResetButtons()
+
+    def setAxis(self, axis_id: int, axis_value: int):
+        self.j._sdk.SetAxis(axis_value, self.controller_id, axis_id)
 
 def main():
     wii = WiiMote()
@@ -55,6 +44,9 @@ def main():
     wii.setButton("-", False)
     wii.setButton("B", False)
     wii.setButton("A", False)
+    wii.setAxis(pyvjoy.HID_USAGE_X, 0x4000)
+    wii.setAxis(pyvjoy.HID_USAGE_Y, 0x8000)
+
 
 if __name__ == "__main__":
     main()
