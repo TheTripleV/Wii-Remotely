@@ -16,9 +16,9 @@ struct phm: View {
                 .overlay(Text("-").foregroundColor(Color(UIColor.secondarySystemBackground)).font(.title))
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["-": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "-": true])
                                     } else {
-                                        sender.socket.emit("json", ["-": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "-": false])
                                     }
                                 }, perform: { })
             Circle()
@@ -26,9 +26,9 @@ struct phm: View {
                 .overlay(Text("home").foregroundColor(Color(UIColor.secondarySystemBackground)))
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["HOME": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "HOME": true])
                                     } else {
-                                        sender.socket.emit("json", ["HOME": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "HOME": false])
                                     }
                                 }, perform: { })
             Circle()
@@ -36,9 +36,9 @@ struct phm: View {
                 .overlay(Text("+").foregroundColor(Color(UIColor.secondarySystemBackground)).font(.title))
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["+": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "+": true])
                                     } else {
-                                        sender.socket.emit("json", ["+": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "+": false])
                                     }
                                 }, perform: { })
         }

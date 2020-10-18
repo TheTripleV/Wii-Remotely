@@ -18,6 +18,7 @@
 		7850A4E8253BD21100965775 /* onetwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7850A4E7253BD21100965775 /* onetwo.swift */; };
 		7850A4EA253BDAAB00965775 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7850A4E9253BDAAB00965775 /* Sender.swift */; };
 		7850A4ED253BFC9200965775 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7850A4EC253BFC9200965775 /* SocketIO */; };
+		7850A4EF253C29ED00965775 /* connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7850A4EE253C29ED00965775 /* connection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		7850A4E5253BD0F100965775 /* phm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phm.swift; sourceTree = "<group>"; };
 		7850A4E7253BD21100965775 /* onetwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onetwo.swift; sourceTree = "<group>"; };
 		7850A4E9253BDAAB00965775 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		7850A4EE253C29ED00965775 /* connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +52,6 @@
 		7850A4C4253BBBE600965775 = {
 			isa = PBXGroup;
 			children = (
-				7850A4E9253BDAAB00965775 /* Sender.swift */,
 				7850A4CF253BBBE600965775 /* wiirii */,
 				7850A4CE253BBBE600965775 /* Products */,
 			);
@@ -67,9 +68,11 @@
 		7850A4CF253BBBE600965775 /* wiirii */ = {
 			isa = PBXGroup;
 			children = (
+				7850A4E9253BDAAB00965775 /* Sender.swift */,
 				7850A4E7253BD21100965775 /* onetwo.swift */,
 				7850A4E5253BD0F100965775 /* phm.swift */,
 				7850A4E3253BD05800965775 /* Abutton.swift */,
+				7850A4EE253C29ED00965775 /* connection.swift */,
 				7850A4D0253BBBE600965775 /* wiiriiApp.swift */,
 				7850A4D2253BBBE600965775 /* ContentView.swift */,
 				7850A4DF253BC63200965775 /* dpad.swift */,
@@ -169,6 +172,7 @@
 				7850A4E8253BD21100965775 /* onetwo.swift in Sources */,
 				7850A4D3253BBBE600965775 /* ContentView.swift in Sources */,
 				7850A4E2253BC77500965775 /* RetrieveDimension.swift in Sources */,
+				7850A4EF253C29ED00965775 /* connection.swift in Sources */,
 				7850A4E4253BD05800965775 /* Abutton.swift in Sources */,
 				7850A4D1253BBBE600965775 /* wiiriiApp.swift in Sources */,
 				7850A4E6253BD0F100965775 /* phm.swift in Sources */,

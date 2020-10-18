@@ -9,14 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State var alignment = HorizontalAlignment.center;
+    @State var connectionHeight: CGFloat = 0
+    @State var dpadSize: CGFloat = 1e99
     
     var body: some View {
         VStack(alignment: alignment) {
             HStack {
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(maxWidth:.infinity)
-                    .frame(maxHeight: 0)
+                connection()
+                    .frame(height: connectionHeight)
                 Button(action: {
                     if (alignment == .center) {
                         alignment = .trailing
@@ -33,18 +33,21 @@ struct ContentView: View {
                 }
                 .foregroundColor(Color(UIColor.secondarySystemBackground))
                 .background(Color.primary)
+                .overlay(RetrieveDimension(dim: .height, into: $connectionHeight, when: .always))
             }
 
             Spacer()
             
             dpad()
-                .frame(maxWidth: 300, maxHeight: 300)
+                .frame(maxWidth: min(dpadSize, 233), maxHeight: min(dpadSize, 233))
+                .overlay(RetrieveDimension(dim: .height, into: $dpadSize, when: .dimIsSmaller))
+                .overlay(RetrieveDimension(dim: .width, into: $dpadSize, when: .dimIsSmaller))
             Abutton()
                 .frame(maxHeight: 100)
             phm()
                 .frame(maxHeight: 60)
             onetwo()
-                .frame(maxWidth: 80, maxHeight: 200)
+                .frame(maxWidth: 60, maxHeight: 150)
             
         }
         .padding()
@@ -54,6 +57,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+            ContentView()
+            ContentView()
+        }
     }
 }

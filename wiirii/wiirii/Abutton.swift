@@ -20,9 +20,9 @@ struct Abutton: View {
                 )
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["B": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "B": true])
                                     } else {
-                                        sender.socket.emit("json", ["B": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "B": false])
                                     }
                                 }, perform: { })
             Circle()
@@ -34,9 +34,9 @@ struct Abutton: View {
                 )
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["A": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "A": true])
                                     } else {
-                                        sender.socket.emit("json", ["A": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "A": false])
                                     }
                                 }, perform: { })
             
@@ -49,9 +49,9 @@ struct Abutton: View {
                 )
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["B": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "B": true])
                                     } else {
-                                        sender.socket.emit("json", ["B": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "B": false])
                                     }
                                 }, perform: { })
         }

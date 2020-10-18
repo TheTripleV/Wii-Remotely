@@ -20,9 +20,9 @@ struct onetwo: View {
                 )
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["1": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "1": true])
                                     } else {
-                                        sender.socket.emit("json", ["1": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "1": false])
                                     }
                                 }, perform: { })
             Circle()
@@ -32,9 +32,9 @@ struct onetwo: View {
                 )
                 .onLongPressGesture(minimumDuration: 1.0, maximumDistance: .infinity, pressing: { pressing in
                                     if pressing {
-                                        sender.socket.emit("json", ["2": true])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "2": true])
                                     } else {
-                                        sender.socket.emit("json", ["2": false])
+                                        sender.socket.emit("buttons", ["id": sender.player_id, "2": false])
                                     }
                                 }, perform: { })
 
