@@ -13,6 +13,7 @@ socketio = SocketIO(app)
 
 wiimotes = {1: WiiMote(1), 2: WiiMote(2)}
 
+
 @socketio.on("connect")
 def connect():
     print("Phone connected.")
@@ -40,7 +41,6 @@ def handle_gyro(json):
     maximum_gyro = 20.0
     x, y, z = json["x"], json["y"], json["z"]
     x, y, z = rescale(x, y, z, maximum_gyro)
-
 
     wiimote.setAxis(pyvjoy.HID_USAGE_RX, x)
     wiimote.setAxis(pyvjoy.HID_USAGE_RY, y)
@@ -76,13 +76,13 @@ def handle_acceleration(json):
 
 
 def rescale(x, y, z, max_real_value, max_controller_value=16384):
-    x *= (max_controller_value / max_real_value)
+    x *= max_controller_value / max_real_value
     x += max_controller_value
 
-    y *= (max_controller_value / max_real_value)
+    y *= max_controller_value / max_real_value
     y += max_controller_value
 
-    z *= (max_controller_value / max_real_value)
+    z *= max_controller_value / max_real_value
     z += max_controller_value
 
     return int(x), int(y), int(z)
